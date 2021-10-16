@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     end
     def create
         uid = params[:user][:uid]
-        pass = params[:user][:pass]
+        pass = BCrypt::Password.create(params[:user][:pass])
         @user = User.new(uid: uid, pass: pass)
         @user.save
         redirect_to '/'
