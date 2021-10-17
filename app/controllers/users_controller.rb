@@ -9,8 +9,12 @@ class UsersController < ApplicationController
         uid = params[:user][:uid]
         pass = BCrypt::Password.create(params[:user][:pass])
         @user = User.new(uid: uid, pass: pass)
-        @user.save
-        redirect_to '/'
+        if @user.save 
+          flash[:notice] = '登録完了'
+          redirect_to '/top/main'
+        else
+          render 'new'
+        end
     end
     def destroy
         user = User.find(params[:id])

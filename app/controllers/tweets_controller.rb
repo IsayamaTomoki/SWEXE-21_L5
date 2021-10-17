@@ -8,7 +8,11 @@ class TweetsController < ApplicationController
     def create
       message = params[:tweet][:message]
       @tweet = Tweet.new(message: message)
-      @tweet.save
-      redirect_to '/'
+      if @tweet.save 
+        flash[:notice] = 'ツイートしました'
+        redirect_to '/'
+      else
+        render 'new'
+      end
     end
 end

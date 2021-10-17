@@ -1,5 +1,26 @@
-<% @tweets.each do |tweet| %>
-  <p><%= tweet.message %></p>
+<% if flash[:notice] %>
+   <%= flash[:notice] %>
 <% end %>
 
-<%= link_to 'ツイートする', '/tweets/new' %>
+<% @tweets.each do |tweet| %>
+  <p><%= tweet.message %>
+  <% if session[:login_uid] %>
+    <%= link_to 'いいね', likes_path(tweet_id: tweet.id), method: :post %>
+    <%= link_to 'いいね削除', like_path(tweet), method: :delete %>
+    <% if like = Like.find_by(tweet_id: tweet.id) %>
+      <%= link_to '★', like_path(tweet), method: :delete %>
+    <% else %>
+      <%= link_to '☆', likes_path(tweet_id: tweet.id), method: :post %>
+    <% end %>
+  <% end %>
+  </p>
+<% end %>
+
+<% if session[:login_uid] %>
+  <%= link_to 'ツイートする', '/tweets/new' %>
+  <p>ログイン中：<%= session[:login_uid] %> さん</p>
+  <%= link_to 'ログアウト', top_logout_path %>
+<% else %>
+  <%= link_to 'ログイン', '/top/main' %>
+  <p>ログインしていません</p>
+<% end %>

@@ -1,10 +1,7 @@
 class TopController < ApplicationController
     def main
-       if session[:login_uid]
-          render 'main' 
-       else
-          render 'login_form'
-       end
+       @tweets = Tweet.all
+       render 'login_form'
     end
     def login
        if user = User.find_by(uid: params[:uid])

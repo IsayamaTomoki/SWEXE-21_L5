@@ -1,3 +1,7 @@
+<% if flash[:notice] %>
+   <%= flash[:notice] %>
+<% end %>
+
 <%= form_tag '/top/login', method: :post do %>
   <p><%= label_tag :uid, 'ユーザーID' %>
   <%= text_field_tag :uid %></p>
@@ -5,3 +9,7 @@
   <%= password_field_tag :pass %></p>
   <%= submit_tag 'ログイン' %>
 <% end %>
+<br/>
+<p><%= link_to 'ユーザー一覧', '/users' %></p>
+<p><%= link_to '戻る', :back %></p>
+<p><%= link_to 'メインページ', root_path %></p>
