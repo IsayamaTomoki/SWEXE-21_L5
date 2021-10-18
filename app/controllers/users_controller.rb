@@ -6,9 +6,8 @@ class UsersController < ApplicationController
         @user = User.new
     end
     def create
-        uid = params[:user][:uid]
-        pass = BCrypt::Password.create(params[:user][:pass])
-        @user = User.new(uid: uid, pass: pass)
+        @user = User.new(uid: params[:user][:uid],password: params[:user][:password],
+        password_confirmation: params[:user][:password_confirmation])
         if @user.save 
           flash[:notice] = '登録完了'
           redirect_to root_path

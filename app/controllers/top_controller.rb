@@ -1,7 +1,7 @@
 class TopController < ApplicationController
     def main
        @tweets = Tweet.all
-       if session[:login_uid]
+       if current_user
           render 'main'
        else
           render 'login_form'

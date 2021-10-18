@@ -4,10 +4,13 @@
 
 <% @tweets.each do |tweet| %>
   <p><%= tweet.message %>
-  <% if session[:login_uid] %>
+  <% if current_user %>
+    <% user = User.find_by(uid: session[:login_uid]) %>
+    <% if tweet.user_id == user.id %>
+      <%= link_to '削除', "/tweets/#{tweet.id}", method: :delete %>
+    <% end %>
     <%= link_to 'いいね', likes_path(tweet_id: tweet.id), method: :post %>
     <%= link_to 'いいね削除', like_path(tweet), method: :delete %>
-    <% user = User.find_by(uid: session[:login_uid]) %>
     <% if like = Like.find_by(user_id: user.id, tweet_id: tweet.id) %>
       <%= link_to '★', like_path(tweet), method: :delete %>
     <% else %>
@@ -17,7 +20,7 @@
   </p>
 <% end %>
 
-<% if session[:login_uid] %>
+<% if current_user %>
   <%= link_to 'ツイートする', '/tweets/new' %>
   <p>ログイン中：<%= session[:login_uid] %> さん</p>
   <%= link_to 'ログアウト', top_logout_path %>
