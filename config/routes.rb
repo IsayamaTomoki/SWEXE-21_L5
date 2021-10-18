@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
     resources :users, :tweets, :likes
-    root 'tweets#index'
+    root 'top#main'
     get 'top/main', to: 'top#main'
     post 'top/login'
     get 'top/logout'

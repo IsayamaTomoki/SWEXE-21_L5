@@ -7,7 +7,8 @@
   <% if session[:login_uid] %>
     <%= link_to 'いいね', likes_path(tweet_id: tweet.id), method: :post %>
     <%= link_to 'いいね削除', like_path(tweet), method: :delete %>
-    <% if user = User.find_by(uid: session[:login_uid]) && like = Like.find_by(user_id: user.id, tweet_id: tweet.id) %>
+    <% user = User.find_by(uid: session[:login_uid]) %>
+    <% if like = Like.find_by(user_id: user.id, tweet_id: tweet.id) %>
       <%= link_to '★', like_path(tweet), method: :delete %>
     <% else %>
       <%= link_to '☆', likes_path(tweet_id: tweet.id), method: :post %>
