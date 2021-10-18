@@ -11,7 +11,7 @@ class UsersController < ApplicationController
         @user = User.new(uid: uid, pass: pass)
         if @user.save 
           flash[:notice] = '登録完了'
-          redirect_to '/top/main'
+          redirect_to root_path
         else
           render 'new'
         end
